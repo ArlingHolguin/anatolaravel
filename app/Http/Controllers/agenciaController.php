@@ -14,6 +14,7 @@ class agenciaController extends Controller
     public function index()
     {
         $agencias  = Agencia::with('getChildren')->first(); 
+        dd($agencias);
         return view('agencias.index', compact('agencias'));
     }
 

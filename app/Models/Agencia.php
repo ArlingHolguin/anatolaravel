@@ -9,9 +9,11 @@ class Agencia extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'nit', 'type'];
+
 
     public function getChildren()
     {
-        return $this->hasMany(Sucursal::class, 'parent_id', 'sucursal_id');
+        return $this->hasMany(Sucursal::class, 'parent_id', 'id');
     }
 }

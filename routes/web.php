@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\AgencyController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,4 +20,5 @@ Route::get('/', function () {
 });
 
 
-route::resource('/agencia', App\Http\Controllers\agenciaController::class)->names('agencias')->middleware('validate_role');
+Route::resource('/prospecto', AgencyController::class)->names('agencias');
+

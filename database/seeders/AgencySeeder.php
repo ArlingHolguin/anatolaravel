@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Agencia;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -13,57 +13,25 @@ class AgencySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('agencias')->insert([
-            [
-                'name' => 'Agencia 1 SAS',
-                'nit' => 321654987,
-                'type' => 'Principal',
-            ],
-            [
-                'name' => 'Agencia 2 CI',
-                'nit' => 98983336,
-                'type' => 'Principal',
-            ],
-            [
-                'name' => 'Agencia 3 Ltda',
-                'nit' => 123456789,
-                'type' => 'Sucursal',
-            ],
-            [
-                'name' => 'Agencia 4 SAS',
-                'nit' => 987654321,
-                'type' => 'Principal',
-            ],
-            [
-                'name' => 'Agencia 5 CIA',
-                'nit' => 456789123,
-                'type' => 'Sucursal',
-            ],
-            [
-                'name' => 'Agencia 6 Internacional',
-                'nit' => 567890123,
-                'type' => 'Principal',
-            ],
-            [
-                'name' => 'Agencia 7 Express',
-                'nit' => 908172635,
-                'type' => 'Sucursal',
-            ],
-            [
-                'name' => 'Agencia 8 Travel',
-                'nit' => 112233445,
-                'type' => 'Sucursal',
-            ],
-            [
-                'name' => 'Agencia 9 VIP',
-                'nit' => 998877665,
-                'type' => 'Principal',
-            ],
-            [
-                'name' => 'Agencia 10 Tour',
-                'nit' => 223344556,
-                'type' => 'Sucursal',
-            ],
-        ]);
+        // Crear agencias principales
+        $principales = Agencia::factory(5)->create(['type' => 'Principal']);
+
+        // Crear sucursales
+        $sucursales = Agencia::factory(15)->create(['type' => 'Sucursal']);
+
+        // Asignar sucursales a principales
+        $principales->each(function ($principal) use ($sucursales) {
+            // Asignar entre 1 y 3 sucursales aleatorias a cada principal
+            $asignadas = $sucursales->random(rand(1, 3));
+
+            foreach ($asignadas as $sucursal) {
+                DB::table('sucursals')->insert([
+                    'parent_id' => $principal->id,
+                    'child_id' => $sucursal->id,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+        });
     }
 }
