@@ -21,7 +21,7 @@
       </ul>
     </div>
 
-    <a class="my-5 text-blue-500 pointer-hand" href="/agencia">
+    <a class="my-5 text-blue-500 pointer-hand" href="{{ route('agencias.index') }}">
       Visualizacion de Agencias
     <a>
 </div>
